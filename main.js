@@ -5,6 +5,15 @@ fetch(`${URL}/gviz/tq?tqx=out:json`)
   .then(text => {
     const json = JSON.parse(text.substring(47).slice(0, -2));  // remove google wrapper
     const rows = json.table.rows.map(r => r.c.map(c => c?.v));
-    console.log(rows);
+    const tableBody = document.getElementById('table-body');
+    rows.forEach(row => {
+      const tr = document.createElement('tr');
+      row.forEach(cell => {
+        const td = document.createElement('td');
+        td.textContent = cell;
+        tr.appendChild(td);
+      });
+      tableBody.appendChild(tr);
+    });
   });
 
